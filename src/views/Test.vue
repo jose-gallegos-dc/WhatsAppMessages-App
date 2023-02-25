@@ -1,21 +1,15 @@
 <template>
     <v-container>
-        <h1>Test</h1>
-        <h2 class="text-purple-darken-4">My Address</h2>
-        <v-card class="mx-auto" width="400">
-            <!-- <template v-slot:title>
-                This is a title
-            </template>
-            -->
-            <v-card-text>
-                This is content
-            </v-card-text>
-
-            <v-form fast-fail @submit.prevent class="pa-4 pt-2">
-                <v-textarea label="Mensaje" color="teal-darken-4" auto-grow variant="outlined" rows="3" row-height="15"></v-textarea>
-                <v-btn type="submit" class="pa-3" block>Submit</v-btn>
+        <v-card class="mx-auto" width="400" elevation="4">
+            <v-form @submit.prevent class="pa-4" v-model="valid">
+                <v-textarea label="Mensaje" color="teal-darken-3" rows="4" row-height="15" v-model="message"
+                    :rules="messageRules" :counter="100"></v-textarea>
+                <div class="d-flex justify-end">
+                    <v-btn type="submit" class="mt-3" color="teal-darken-2"  prepend-icon="mdi-send" :disabled="!valid">
+                        Enviar
+                    </v-btn>
+                </div>
             </v-form>
-
         </v-card>
     </v-container>
 </template>
@@ -23,7 +17,20 @@
 <script>
 export default {
     data: () => ({
-        firstName: '',
+        message: '',
+        valid: false,
+        messageRules: [
+            value => {
+                if (value) return true
+
+                return 'Name is requred.'
+            },
+            value => {
+                if (value?.length <= 100) return true
+
+                return 'Name must be less than 60 characters.'
+            },
+        ],
     }),
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-card class="mx-auto" width="400" elevation="4">
+        <v-card class="mx-auto" max-width="500" elevation="4">
             <v-form @submit.prevent class="pa-4" v-model="valid">
                 <v-textarea label="Mensaje" color="teal-darken-3" rows="4" row-height="15" v-model="message"
                     :rules="messageRules" :counter="100"></v-textarea>

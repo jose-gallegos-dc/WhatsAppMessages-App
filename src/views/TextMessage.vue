@@ -2,10 +2,10 @@
     <v-container>
         <v-card class="mx-auto" max-width="500" elevation="4">
             <v-form @submit.prevent class="pa-4" v-model="valid">
-                <v-textarea label="Mensaje" color="teal-darken-3" rows="4" row-height="15" v-model="message"
+                <v-textarea label="Mensaje" color="teal-darken-3" rows="5" row-height="15" v-model="message"
                     :rules="messageRules" :counter="100"></v-textarea>
                 <div class="d-flex justify-end">
-                    <v-btn type="submit" class="mt-3" color="teal-darken-2"  prepend-icon="mdi-send" :disabled="!valid">
+                    <v-btn type="submit" class="mt-3" color="teal-darken-2" prepend-icon="mdi-send" :disabled="!valid">
                         Enviar
                     </v-btn>
                 </div>
@@ -21,15 +21,17 @@ export default {
         valid: false,
         messageRules: [
             value => {
-                if (value) return true
-
-                return 'Name is requred.'
+                if (value) return true;
+                return 'El mensaje es requerido';
             },
             value => {
-                if (value?.length <= 100) return true
-
-                return 'Name must be less than 60 characters.'
+                if (value?.length <= 100) return true;
+                return 'El mensaje debe tener menos de 100 caracteres.';
             },
+            value => {
+                if (value && value.trim().length > 0) return true;
+                return 'El mensaje no puede tener solo espacios en blanco.';
+            }
         ],
     }),
 }

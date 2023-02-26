@@ -17,16 +17,24 @@ const routes = [
     ],
   },
   {
-    path: "/test",
+    path: "/text-message",
     component: () => import("@/layouts/default/Default.vue"),
     children: [
       {
         path: "",
-        name: "Test",
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ "@/views/Test.vue"),
+        name: "TextMessage",
+        component: () => import(/* webpackChunkName: "home" */ "@/views/TextMessage.vue"),
+      },
+    ],
+  },
+  {
+    path: "/template-message",
+    component: () => import("@/layouts/default/Default.vue"),
+    children: [
+      {
+        path: "",
+        name: "TemplateMessage",
+        component: () => import(/* webpackChunkName: "home" */ "@/views/TemplateMessage.vue"),
       },
     ],
   },

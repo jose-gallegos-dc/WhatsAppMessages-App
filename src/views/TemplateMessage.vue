@@ -1,20 +1,41 @@
 <template>
     <v-container>
         <v-row>
-            <v-col>
-                <v-card class="mx-auto">
-                    <v-list lines="three">
-                        <v-list-subheader>Hola</v-list-subheader>
-                        <v-list-item v-for="(item, i) in items" :key="i" :value="item.value" @click.stop="toggleSelectedItem(item)">
-                            <v-list-item-title>{{ item.title }}</v-list-item-title>
-                            <v-list-item-subtitle>{{ item.description }}</v-list-item-subtitle>
-                        </v-list-item>
-                    </v-list>
+            <v-col cols="12" md="5">
+                <v-card class="mx-auto" elevation="4">
+                    <div class="ma-4">Mensaje de plantilla</div>
+                    <v-autocomplete class="mx-4" v-model="template" :items="items" item-text="title" clearable
+                        label="Plantillas disponibles"></v-autocomplete>
+                    <v-autocomplete class="mx-4" v-model="to"
+                        :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" clearable
+                        label="Para"></v-autocomplete>
                 </v-card>
             </v-col>
-            <v-col>
-                <h1>Seleccionaste</h1>
-                <h3 v-if="selectedItem">{{ selectedItem.value }}</h3>
+            <v-col cols="12" md="7">
+                <v-card elevation="4">
+                    <v-form @submit.prevent class="pa-4" v-model="valid">
+                        <div class="d-flex flex-wrap ma-2 bg-surface-variant">
+                            <div>Hola</div>
+                            <v-text-field class="field-message flex-grow-1" label="1" variant="underlined"
+                                type="text"></v-text-field>
+                            <div class="flex-shrink-1 ml-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias minima fugiat iure blanditiis perspiciatis nam incidunt sed deserunt, doloremque earum quas odio eligendi veniam distinctio magnam saepe consectetur quae? Rem?</div>
+                        </div>
+
+
+
+
+
+                        <div class="d-flex justify-end">
+                            <v-btn class="mt-3" type="submit" color="teal-darken-2" prepend-icon="mdi-send"
+                                :disabled="!valid">
+                                Enviar
+                            </v-btn>
+                        </div>
+                    </v-form>
+
+                    <p v-if="template">{{ items.find(item => item.value === template).title }}</p>
+
+                </v-card>
             </v-col>
         </v-row>
     </v-container>
@@ -25,33 +46,32 @@ export default {
     data: () => ({
         items: [
             {
-                title: "template1",
+                title: "Template1",
                 value: "t1",
-                description: "description 1",
+                description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
             },
             {
-                title: "template2",
+                title: "Template2",
                 value: "t2",
                 description: "description 2",
             },
             {
-                title: "template3",
+                title: "Template3",
                 value: "t3",
                 description: "description 3",
             },
         ],
-        selectedItem: null,
+        template: null,
+        to: null,
+        valid: false,
     }),
-
-    methods: {
-        toggleSelectedItem(item) {
-            if (this.selectedItem === item) {
-                this.selectedItem = null;
-            } else {
-                this.selectedItem = item;
-            }
-        },
-    },
 };
 </script>
+
+<style>
+.field-message {
+    min-width: 6rem;
+    max-width: 8rem;
+}
+</style>
   

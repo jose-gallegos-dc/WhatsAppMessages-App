@@ -38,6 +38,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/voice-message",
+    component: () => import("@/layouts/default/Default.vue"),
+    children: [
+      {
+        path: "",
+        name: "VoiceMessage",
+        component: () => import(/* webpackChunkName: "home" */ "@/views/VoiceMessage.vue"),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({

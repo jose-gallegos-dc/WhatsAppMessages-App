@@ -56,6 +56,11 @@ export default {
         title: "Mensaje de plantilla",
         to: "/template-message",
       },
+      {
+        icon: "mdi-microphone-message",
+        title: "Mensaje de voz",
+        to: "/voice-message",
+      },
     ],
   }),
 }

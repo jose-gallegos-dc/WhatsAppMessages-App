@@ -13,6 +13,9 @@ import { createApp } from 'vue'
 // Plugins
 import { registerPlugins } from '@/plugins'
 
+// Variables
+// import '@/styles/variables.scss';
+
 const app = createApp(App)
 
 registerPlugins(app)

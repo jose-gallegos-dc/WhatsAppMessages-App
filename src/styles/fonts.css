@@ -1,0 +1,7 @@
+/* Importa la fuente Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+/* Aplica la fuente Montserrat a todo el texto */
+body {
+  font-family: 'Montserrat', sans-serif;
+}

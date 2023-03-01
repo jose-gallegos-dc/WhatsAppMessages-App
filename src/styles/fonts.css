@@ -1,7 +1,20 @@
 /* Importa la fuente Montserrat */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
 
-/* Aplica la fuente Montserrat a todo el texto */
+/* Aplica la fuente Montserrat regular a los elementos de texto normales */
 body {
   font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+}
+
+/* Aplica la fuente Montserrat medium a los elementos de texto con un peso intermedio */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+}
+
+/* Aplica la fuente Montserrat bold a los elementos de texto en negrita */
+.bold {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
 }

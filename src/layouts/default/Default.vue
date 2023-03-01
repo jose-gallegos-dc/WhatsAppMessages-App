@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" @click="rail = false">
+    <v-navigation-drawer v-model="drawer" v-if="drawer" @click="rail = false">
       <v-list-item prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg" nav>
         John Leider
       </v-list-item>
@@ -65,5 +65,8 @@ export default {
       },
     ],
   }),
+  mounted() {
+    this.drawer = false; // Establece el valor de drawer a false en el mounted
+  },
 }
 </script>

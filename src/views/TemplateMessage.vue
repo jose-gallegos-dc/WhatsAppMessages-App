@@ -5,7 +5,7 @@
         <v-card class="mx-auto" elevation="4">
           <div class="ma-4">Mensaje de plantilla</div>
           <v-autocomplete class="mx-4" v-model="template" :items="items" item-text="title" clearable
-            label="Plantillas disponibles"></v-autocomplete>
+            label="Plantillas disponibles"/>
           <v-autocomplete class="mx-4" v-model="to" :items="[
             'California',
             'Colorado',
@@ -13,7 +13,7 @@
             'Georgia',
             'Texas',
             'Wyoming',
-          ]" clearable label="Para"></v-autocomplete>
+          ]" clearable label="Para" />
         </v-card>
       </v-col>
       <v-col cols="12" md="7">

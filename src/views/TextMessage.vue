@@ -2,17 +2,24 @@
     <v-container>
         <v-row>
             <v-col cols="12" md="5">
-                <v-card elevation="4" class="pa-4">
-                    <v-autocomplete label="Select" v-model="selectedItems" v-model:search="search" :loading="loading"
-                        hide-no-data hide-details :items="items" multiple chips closable-chips />
+                <v-card elevation="0" class="pa-4 border rounded-lg">
+                    <v-row>
+                        <v-col cols="3">
+                            <v-autocomplete :items="codeCountryItems" hide-no-data hide-details />
+                        </v-col>
+                        <v-col cols="9">
+                            <v-autocomplete label="Phone number" v-model="phoneNumberSelected" v-model:search="phoneNumberSearch" :items="phoneNumberItems"
+                                :loading="phoneNumberLoading" hide-no-data hide-details  multiple chips closable-chips />
+                        </v-col>
+                    </v-row>
                 </v-card>
             </v-col>
             <v-spacer></v-spacer>
             <v-col cols="12" md="7">
-                <v-card elevation="4" class="pa-4">
+                <v-card elevation="0" class="pa-4 border rounded-lg">
                     <v-form @submit.prevent v-model="valid">
-                        <v-textarea label="Mensaje" color="teal-darken-3" rows="5" row-height="15"
-                            v-model="message" :rules="messageRules" :counter="100"></v-textarea>
+                        <v-textarea label="Mensaje" color="teal-darken-3" rows="5" row-height="15" v-model="message"
+                            :rules="messageRules" :counter="255"></v-textarea>
                         <div class="d-flex justify-end">
                             <v-btn type="submit" class="mt-3" color="teal-darken-2" prepend-icon="mdi-send"
                                 :disabled="!valid">
@@ -29,81 +36,42 @@
 <script>
 export default {
     data: () => ({
-        loading: false,
-        search: null,
-        selectedItems: [],
-        items: [],
-        states: [
-            'Alabama',
-            'Alaska',
-            'American Samoa',
-            'Arizona',
-            'Arkansas',
-            'California',
-            'Colorado',
-            'Connecticut',
-            'Delaware',
-            'District of Columbia',
-            'Federated States of Micronesia',
-            'Florida',
-            'Georgia',
-            'Guam',
-            'Hawaii',
-            'Idaho',
-            'Illinois',
-            'Indiana',
-            'Iowa',
-            'Kansas',
-            'Kentucky',
-            'Louisiana',
-            'Maine',
-            'Marshall Islands',
-            'Maryland',
-            'Massachusetts',
-            'Michigan',
-            'Minnesota',
-            'Mississippi',
-            'Missouri',
-            'Montana',
-            'Nebraska',
-            'Nevada',
-            'New Hampshire',
-            'New Jersey',
-            'New Mexico',
-            'New York',
-            'North Carolina',
-            'North Dakota',
-            'Northern Mariana Islands',
-            'Ohio',
-            'Oklahoma',
-            'Oregon',
-            'Palau',
-            'Pennsylvania',
-            'Puerto Rico',
-            'Rhode Island',
-            'South Carolina',
-            'South Dakota',
-            'Tennessee',
-            'Texas',
-            'Utah',
-            'Vermont',
-            'Virgin Island',
-            'Virginia',
-            'Washington',
-            'West Virginia',
-            'Wisconsin',
-            'Wyoming',
+        phoneNumberSelected: [],
+        phoneNumberSearch: null,
+        phoneNumberItems: [],
+        phoneNumberLoading: false,
+        phoneNumbers: [
+            '9612491813',
+            '9611234567',
+            '9611234568',
+            '9611234569',
+            '9611234560',
+            '9611234565',
+        ],
+        countryCodeSelected: [],
+        countryCodeSearch: null,
+        countryCodeItems: [],
+        countryCodeLoading: false,
+        countryCodes: [
+            {
+                'code' : '+93',
+                'country' : 'Afghanistan'
+            },
+            {
+                'code' : '+355',
+                'country' : 'Albania'
+            },
         ],
         message: '',
         valid: false,
         messageRules: [
             value => {
                 if (value) return true;
-                return 'El mensaje es requerido';
+                return 'El mensaje es requerido.';
             },
             value => {
-                if (value?.length <= 100) return true;
-                return 'El mensaje debe tener menos de 100 caracteres.';
+                if (value?.length <= 255) return true;
+                return 'El mensaje debe tener menos de 255 caracteres.';
             },
             value => {
                 if (value && value.trim().length > 0) return true;
@@ -112,19 +80,32 @@ export default {
         ],
     }),
     watch: {
-        search(val) {
-            val && val !== this.select && this.querySelections(val)
+        phoneNumberSearch(val) {
+            val && val !== this.phoneNumberSelected && this.phoneNumberSelections(val)
+        },
+        countryCodeSearch(val) {
+            val && val !== this.countryCodeSelected && this.countryCodeSelections(val)
         },
     },
     methods: {
-        querySelections(v) {
-            this.loading = true
+        phoneNumberSelections(v) {
+            this.phoneNumberLoading = true
             // Simulated ajax query
             setTimeout(() => {
-                this.items = this.states.filter(e => {
+                this.phoneNumberItems = this.phoneNumbers.filter(e => {
                     return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
                 })
-                this.loading = false
+                this.phoneNumberLoading = false
+            }, 500)
+        },
+        countryCodeSelections(v) {
+            this.countryCodeLoading = true
+            // Simulated ajax query
+            setTimeout(() => {
+                this.countryCodeItems = this.countryCodes.filter(e => {
+                    return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+                })
+                this.countryCodeLoading = false
             }, 500)
         },
     },

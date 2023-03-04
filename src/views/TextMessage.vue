@@ -4,12 +4,62 @@
             <v-col cols="12" md="5">
                 <v-card elevation="0" class="pa-4 border rounded-lg">
                     <v-row>
-                        <v-col cols="3">
-                            <v-autocomplete :items="codeCountryItems" hide-no-data hide-details />
+                        <v-col cols="4">
+                            <!-- <v-autocomplete :items="countryCodes" item-title="country" item-value="code"
+                                v-model="selectedCode" label="Country Code" /> -->
+
+                            <!-- <v-combobox v-model="selectedCode" :items="countryCodes" item-title="country" item-value="code"
+                                return-object :item="item => ({ icon: item.icon, text: item.country })" autocomplete
+                                :menu-props="{ auto: true }">
+                                <template v-slot:selection="{ item }">
+                                    <v-icon v-if="item">{{ item.icon }}</v-icon>
+                                </template>
+                            </v-combobox> -->
+
+
+                            <!-- <v-combobox v-model="selectedCode" :items="countryCodes" item-title="code" item-value="code"
+                                return-object :item="item => ({ icon: item.icon, text: item.country, code: item.code })"
+                                autocomplete>
+                                <template v-slot:selection="{ item }">
+                                    <v-icon v-if="item.value">{{ item.value.icon }}</v-icon>
+                                </template>
+                                <template v-slot:item="{ item }">
+                                    <v-list-item @click="selectedCode = item">
+                                        <div>{{ item.value.country }} - {{ item.value.code }}</div>
+                                    </v-list-item>
+                                </template>
+                            </v-combobox> -->
+
+                            <!-- <v-combobox v-model="selectedCode" :items="countryCodes" item-title="country" item-value="code"
+                                return-object label="Select an item.." :custom-filter="filterCountries">
+                            </v-combobox> -->
+
+                            <v-combobox v-model="selectedCode" :items="countryCodes" item-title="country" item-value="code"
+                                :return-object="true" label="Select an item.." :custom-filter="(search, item) => {
+                                    console.log(countryCodes);
+                                    return item.country.toLowerCase().includes(search.toLowerCase()) || item.code.includes(search);
+                                }">
+                            </v-combobox>
+
+
+
+
+
+
+
+
+
+
+
+                            <!-- <v-text-field v-model="search" label="Buscar país" /> -->
+
+
+                            <!-- <v-autocomplete v-model="countryCodeSelected" v-model:search="countryCodeSearch" :items="countryCodeItems" :loading="countryCodeLoading" hide-no-data hide-details /> -->
                         </v-col>
-                        <v-col cols="9">
-                            <v-autocomplete label="Phone number" v-model="phoneNumberSelected" v-model:search="phoneNumberSearch" :items="phoneNumberItems"
-                                :loading="phoneNumberLoading" hide-no-data hide-details  multiple chips closable-chips />
+                        <v-col cols="8">
+                            <v-autocomplete label="Phone number" v-model="phoneNumberSelected"
+                                v-model:search="phoneNumberSearch" :items="phoneNumberItems" :loading="phoneNumberLoading"
+                                hide-no-data hide-details multiple chips closable-chips />
                         </v-col>
                     </v-row>
                 </v-card>
@@ -52,16 +102,21 @@ export default {
         countryCodeSearch: null,
         countryCodeItems: [],
         countryCodeLoading: false,
+
+        selectedCode: null,
         countryCodes: [
             {
-                'code' : '+93',
-                'country' : 'Afghanistan'
+                code: '93',
+                country: 'Afghanistan',
+                icon: 'mdi-flag'
             },
             {
-                'code' : '+355',
-                'country' : 'Albania'
+                code: '355',
+                country: 'Albania',
+                icon: 'mdi-flag-triangle'
             },
         ],
+
         message: '',
         valid: false,
         messageRules: [
@@ -83,9 +138,7 @@ export default {
         phoneNumberSearch(val) {
             val && val !== this.phoneNumberSelected && this.phoneNumberSelections(val)
         },
-        countryCodeSearch(val) {
-            val && val !== this.countryCodeSelected && this.countryCodeSelections(val)
-        },
+
     },
     methods: {
         phoneNumberSelections(v) {
@@ -98,16 +151,21 @@ export default {
                 this.phoneNumberLoading = false
             }, 500)
         },
-        countryCodeSelections(v) {
-            this.countryCodeLoading = true
-            // Simulated ajax query
-            setTimeout(() => {
-                this.countryCodeItems = this.countryCodes.filter(e => {
-                    return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-                })
-                this.countryCodeLoading = false
-            }, 500)
-        },
-    },
+
+
+        filterCountries(search, item) {
+            const lowerSearch = search.toLowerCase();
+            const lowerCountry = item.value.country.toLowerCase();
+            const code = item.value.code;
+            return (
+                lowerCountry.includes(lowerSearch) ||
+                code.includes(lowerSearch)
+            );
+        }
+
+
+
+
+    }
 }
 </script>

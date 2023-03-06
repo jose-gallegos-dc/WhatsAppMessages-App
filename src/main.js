@@ -13,6 +13,9 @@ import { createApp } from 'vue'
 // Plugins
 import { registerPlugins } from '@/plugins'
 
+// Icons countries
+import 'flag-icons/css/flag-icons.css'
+
 // Variables
 // import '@/styles/variables.scss';
 

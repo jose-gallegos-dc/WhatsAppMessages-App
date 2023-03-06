@@ -1,92 +1,58 @@
 <template>
-    <v-combobox v-model="selectedCode" v-model:search="phoneNumberSearch" :items="countryCodes" item-title="country"
-        item-value="code" return-object label="Select an item.." hide-no-data hide-details>
-    </v-combobox>
+  <v-combobox v-model="selectedCode" v-model:search="phoneNumberSearch" :items="countryCodes" item-title="searchText"
+    item-value="code" return-object label="Select an item.." hide-no-data hide-details>
+  </v-combobox>
 </template>
 
-<!-- <v-autocomplete label="Phone number" v-model="phoneNumberSelected"
-                                v-model:search="phoneNumberSearch" :items="phoneNumberItems" :loading="phoneNumberLoading"
-                                hide-no-data hide-details multiple chips closable-chips /> -->
-  
 <script>
 export default {
-    data: () => ({
-        
-        selectedCode: [],
-        phoneNumberSearch: null,
-        countryCodes: [
-            // {
-            //     code: '93',
-            //     country: 'Afghanistan',
-            //     icon: 'mdi-flag'
-            // },
-            // {
-            //     code: '355',
-            //     country: 'Albania',
-            //     icon: 'mdi-flag-triangle'
-            // },
-            // {
-            //     code: '356',
-            //     country: 'mexico',
-            //     icon: 'mdi-flag-triangle'
-            // },
-        ],
+  data: () => ({
+    phoneNumberSearch: null,
+    selectedCode: null,
+    countryCodes: [],
+    countries: [
+      {
+        code: '93',
+        country: 'Afghanistan',
+        icon: 'mdi-flag'
+      },
+      {
+        code: '94',
+        country: 'Test2',
+        icon: 'mdi-flag'
+      },
+      {
+        code: '95',
+        country: 'Prueba',
+        icon: 'mdi-flag'
+      },
+    ],
+  }),
 
-        // countries: [
-        //     {
-        //         code: '93',
-        //         country: 'test',
-        //         icon: 'mdi-flag'
-        //     },
-        // ],
-
-        countries: [
-            {
-                code: '93',
-                country: 'test',
-                icon: 'mdi-flag'
-            },
-            {
-                code: '94',
-                country: 'test2',
-                icon: 'mdi-flag'
-            },
-        ],
-    }),
-
-    watch: {
-        phoneNumberSearch(val) {
-            val && val !== this.phoneNumberSelected && this.test(val)
-        },
-
+  watch: {
+    phoneNumberSearch(val) {
+      val && val !== this.phoneNumberSelected && this.test(val)
     },
+  },
+  methods: {
+    test(v) {
+      const searchLowerCase = v.toLowerCase();
+      this.countryCodes = this.countries.filter((item) => {
+        const countryLowerCase = item.country.toLowerCase();
+        const codeLowerCase = item.code.toLowerCase();
+        const searchText = `${countryLowerCase} (${codeLowerCase})`.toLowerCase();
 
-    methods: {
-        test(v) {
-            // this.countryCodes = this.countries[0].filter(e => {
-            //     return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-            // })
-            this.countries.forEach(function (elemento, indice, array) {
-                console.log(elemento.code, indice);
+        return searchText.includes(searchLowerCase);
+      }).map((item) => {
+        const country = item.country;
+        const code = item.code;
 
-            //     return this.countryCodes = [
-            //     {
-            //         code: '93',
-            //         country: 'test',
-            //         icon: 'mdi-flag'
-            //     },
-            // ];
-
-
-                // return  
-
-                // return (elemento || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-            })
-
-            return this.countryCodes = this.countries;
-
-            // console.log(v)
-        }
+        return {
+          ...item,
+          searchText: `${country} (${code})`
+        };
+      });
     }
+  }
 }
 </script>

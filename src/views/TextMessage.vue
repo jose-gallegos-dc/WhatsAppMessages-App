@@ -10,7 +10,7 @@
             <v-col cols="12" md="7">
                 <v-card elevation="0" class="pa-4 border rounded-lg">
                     <v-form @submit.prevent="onSubmit" v-model="valid">
-                        <v-textarea label="Mensaje" color="teal-darken-3" rows="5" row-height="15" v-model="message"
+                        <v-textarea class="text-teal-darken-3" label="Mensaje" rows="5" row-height="15" v-model="message"
                             :rules="messageRules" :counter="255"></v-textarea>
                         <div class="d-flex justify-end">
                             <v-btn type="submit" class="mt-3" color="teal-darken-2" prepend-icon="mdi-send"
@@ -54,10 +54,8 @@ export default {
     methods: {
         onSubmit() {
             let phoneNumber = this.$refs.PhoneNumberComponent.phoneNumberSelected; 
-            // let countryCode = this.$refs.PhoneNumberComponent.countryCodeSelected.code;
-            // console.log(countryCode + phoneNumber);
-            console.log('code' + phoneNumber);
-            
+            let countryCode = this.$refs.PhoneNumberComponent.countryCodeSelected.code;
+            console.log(countryCode + phoneNumber);
         }
     }
 }

@@ -3,13 +3,13 @@
         <v-row>
             <v-col cols="12" md="5">
                 <v-card elevation="0" class="pa-4 border rounded-lg">
-                    <PhoneNumber />
+                    <PhoneNumber ref="PhoneNumberComponent" />
                 </v-card>
             </v-col>
             <v-spacer></v-spacer>
             <v-col cols="12" md="7">
                 <v-card elevation="0" class="pa-4 border rounded-lg">
-                    <v-form @submit.prevent v-model="valid">
+                    <v-form @submit.prevent="onSubmit" v-model="valid">
                         <v-textarea label="Mensaje" color="teal-darken-3" rows="5" row-height="15" v-model="message"
                             :rules="messageRules" :counter="255"></v-textarea>
                         <div class="d-flex justify-end">
@@ -51,5 +51,14 @@ export default {
             }
         ],
     }),
+    methods: {
+        onSubmit() {
+            let phoneNumber = this.$refs.PhoneNumberComponent.phoneNumberSelected; 
+            // let countryCode = this.$refs.PhoneNumberComponent.countryCodeSelected.code;
+            // console.log(countryCode + phoneNumber);
+            console.log('code' + phoneNumber);
+            
+        }
+    }
 }
 </script>

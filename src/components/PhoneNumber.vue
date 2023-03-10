@@ -11,8 +11,7 @@
 		<v-col cols="8" class="pl-1">
 			<v-autocomplete color="teal-darken-3" label="Número de teléfono" v-on:keypress="NumbersOnly"
 				v-model.lazy="phoneNumberSelected" v-model:search="phoneNumberSearch" :items="phoneNumberItems"
-				:loading="phoneNumberLoading" hide-no-data clearable @change="onPhoneNumberChange"
-				:hint="isOriginalPhoneNumber" persistent-hint />
+				:loading="phoneNumberLoading" hide-no-data clearable :hint="isOriginalPhoneNumber" persistent-hint />
 		</v-col>
 	</v-row>
 </template>
@@ -45,6 +44,11 @@ export default {
 		phoneNumberSearch(val) {
 			val && val !== this.phoneNumberSelected && this.phoneNumberSelections(val);
 		},
+		phoneNumberSelected(newVal, oldVal) {
+			if (newVal !== oldVal) {
+				this.isOriginalPhoneNumber = this.originalPhoneNumbers.includes(newVal) ? "" : "Teléfono no registrado.";
+			}
+		},
 	},
 	created() {
 		this.originalPhoneNumbers = this.phoneNumbers.slice();
@@ -73,23 +77,12 @@ export default {
 					// Add the new value to the list
 					this.phoneNumbers.push(v);
 				}
-
 				// Filter the list of phone numbers
 				this.phoneNumberItems = this.phoneNumbers.filter((e) => {
 					return (e || "").indexOf(v || "") > -1;
 				});
-
 				this.phoneNumberLoading = false;
 			}, 500);
-		},
-		onPhoneNumberChange() {
-			if (this.originalPhoneNumbers.includes(this.phoneNumberSelected)) {
-				this.isOriginalPhoneNumber = "";
-				console.log("Número seleccionado válido");
-			} else {
-				this.isOriginalPhoneNumber = "Teléfono no registrado.";
-				console.log("Número seleccionado inválido");
-			}
 		},
 	},
 };

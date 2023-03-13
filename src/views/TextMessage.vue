@@ -3,7 +3,7 @@
 		<v-row>
 			<v-col cols="12" md="5">
 				<v-card elevation="0" class="pa-4 border rounded-lg">
-					<PhoneNumber ref="PhoneNumberComponent" />
+					<PhoneNumber ref="PhoneNumber" />
 				</v-card>
 			</v-col>
 			<v-spacer></v-spacer>
@@ -25,10 +25,10 @@
 </template>
 
 <script>
-import PhoneNumber from '@/components/PhoneNumber.vue';
+import PhoneNumber from "@/components/PhoneNumber.vue";
 
 export default {
-	name: 'TextMessage',
+	name: "TextMessage",
 	components: {
 		PhoneNumber
 	},
@@ -52,8 +52,8 @@ export default {
 	}),
 	methods: {
 		onSubmit() {
-			let phoneNumber = this.$refs.PhoneNumberComponent.phoneNumberSelected;
-			let countryCode = this.$refs.PhoneNumberComponent.countryCodeSelected.code;
+			let phoneNumber = this.$refs.PhoneNumber.phoneNumberSelected;
+			let countryCode = this.$refs.PhoneNumber.countryCodeSelected.code;
 			console.log(countryCode + phoneNumber + ' ' + this.message);
 		}
 	}

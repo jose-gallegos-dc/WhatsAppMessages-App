@@ -10,30 +10,14 @@
 			<v-col cols="12" md="7">
 				<v-card elevation="0" class="pa-4 border rounded-lg">
 					<v-form @submit.prevent class="pt-5 pb-4 px-4" v-model="valid">
-
-						<div class="text-justify pa-5 bg-grey-lighten-4 rounded">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-							<input class="field-message" type="text" />
-							eiusmod tempor incididunt ut
-							labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-							<input class="field-message" type="text" /> nostrud exercitation ullamco
-							laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-							dolor in <input class="field-message" type="text" /> reprehenderit in
-							voluptate velit esse cillum dolore eu
-							<input class="field-message" type="text" /> fugiat nulla pariatur.align-start
-							Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-							officia deserunt mollit anim id est laborum.
-						</div>
+						<TemplateMessageInput ref="TemplateMessageInput" />
+						<!-- <v-btn v-on:click="cargar()">Cargar</v-btn> -->
 						<div class="d-flex justify-end mt-3">
 							<v-btn class="mt-3" type="submit" color="teal-darken-2" prepend-icon="mdi-send" :disabled="!valid">
 								Enviar
 							</v-btn>
 						</div>
 					</v-form>
-
-					<p v-if="template">
-						{{ items.find((item) => item.value === template).title }}
-					</p>
 				</v-card>
 			</v-col>
 		</v-row>
@@ -41,12 +25,14 @@
 </template>
   
 <script>
-import PhoneNumber from '@/components/PhoneNumber.vue';
+import PhoneNumber from "@/components/PhoneNumber.vue";
+import TemplateMessageInput from "@/components/TemplateMessageInput.vue";
 
 export default {
-	name: 'TemplateMessage',
+	name: "TemplateMessage",
 	components: {
-		PhoneNumber
+		PhoneNumber,
+		TemplateMessageInput,
 	},
 	data: () => ({
 		items: [
@@ -67,28 +53,23 @@ export default {
 				description: "description 3",
 			},
 		],
-		template: null,
-		to: null,
 		valid: false,
+		templateMessage: {
+			"type": "body",
+			"text": "Hi {{1}}, get an extra 10% off every order above {{2}}. for this date {{3}}",
+		},
 	}),
+	methods: {
+		cargar() {
+			const templateMessage = this.$refs.TemplateMessageInput.$refs.templateMessage;
+			templateMessage.innerHTML = this.templateMessage.text.replace(/\{\{(\d+)\}\}/g, (match, p1) => {
+				const id = `input_${p1}`;
+				return `<input id="${id}" class="field-message font-weight-medium" />`;
+			});
+		},
+	},
+	mounted() {
+		this.cargar();
+	}
 };
 </script>
-
-<style>
-.field-message {
-	padding: 0rem 0.5rem;
-	width: 8rem;
-	border-bottom: -1px solid #00695C;
-	box-shadow: inset 0 -1px 0 #546e7a;
-	text-align: center;
-	margin: 0 0.1rem;
-}
-
-.field-message:hover,
-.field-message:focus {
-	outline: none;
-	border-bottom: -1px solid #00695C;
-	box-shadow: inset 0 -2px 0 #00695C;
-}
-</style>
-  

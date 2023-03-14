@@ -4,14 +4,13 @@
 			<v-col cols="12" md="5">
 				<v-card elevation="0" class="pa-4 border rounded-lg">
 					<PhoneNumber ref="PhoneNumberComponent" />
-					<h1>Template</h1>
+					<TemplateAutoComplete />
 				</v-card>
 			</v-col>
 			<v-col cols="12" md="7">
 				<v-card elevation="0" class="pa-4 border rounded-lg">
 					<v-form @submit.prevent class="pt-5 pb-4 px-4" v-model="valid">
-						<TemplateMessageInput ref="TemplateMessageInput" />
-						<!-- <v-btn v-on:click="cargar()">Cargar</v-btn> -->
+						<TemplateInput ref="TemplateInput" />
 						<div class="d-flex justify-end mt-3">
 							<v-btn class="mt-3" type="submit" color="teal-darken-2" prepend-icon="mdi-send" :disabled="!valid">
 								Enviar
@@ -26,13 +25,15 @@
   
 <script>
 import PhoneNumber from "@/components/PhoneNumber.vue";
-import TemplateMessageInput from "@/components/TemplateMessageInput.vue";
+import TemplateInput from "@/components/TemplateInput.vue";
+import TemplateAutoComplete from "@/components/TemplateAutoComplete.vue";
 
 export default {
 	name: "TemplateMessage",
 	components: {
 		PhoneNumber,
-		TemplateMessageInput,
+		TemplateInput,
+		TemplateAutoComplete,
 	},
 	data: () => ({
 		items: [
@@ -61,8 +62,8 @@ export default {
 	}),
 	methods: {
 		cargar() {
-			const templateMessage = this.$refs.TemplateMessageInput.$refs.templateMessage;
-			templateMessage.innerHTML = this.templateMessage.text.replace(/\{\{(\d+)\}\}/g, (match, p1) => {
+			const templateInput = this.$refs.TemplateInput.$refs.templateMessage;
+			templateInput.innerHTML = this.templateMessage.text.replace(/\{\{(\d+)\}\}/g, (match, p1) => {
 				const id = `input_${p1}`;
 				return `<input id="${id}" class="field-message font-weight-medium" />`;
 			});

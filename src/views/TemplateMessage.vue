@@ -4,7 +4,7 @@
 			<v-col cols="12" md="5">
 				<v-card elevation="0" class="pa-4 border rounded-lg">
 					<PhoneNumber ref="PhoneNumberComponent" />
-					<TemplateAutoComplete />
+					<TemplateAutoComplete ref="TemplateAutocompleteComponent" />
 				</v-card>
 			</v-col>
 			<v-col cols="12" md="7">
@@ -36,41 +36,31 @@ export default {
 		TemplateAutoComplete,
 	},
 	data: () => ({
-		items: [
-			{
-				title: "Template1",
-				value: "t1",
-				description:
-					"Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-			},
-			{
-				title: "Template2",
-				value: "t2",
-				description: "description 2",
-			},
-			{
-				title: "Template3",
-				value: "t3",
-				description: "description 3",
-			},
-		],
 		valid: false,
-		templateMessage: {
-			"type": "body",
-			"text": "Hi {{1}}, get an extra 10% off every order above {{2}}. for this date {{3}}",
-		},
+		selectedTemplate: null,
 	}),
+	watch: {
+		selectedTemplate(value) {
+			const selectedTemplate = this.$refs.TemplateAutocompleteComponent.templates.find(template => template.value === value);
+			console.log("Plantilla seleccionada: ", selectedTemplate.text);
+			this.cargar(selectedTemplate.text);
+		},
+	},
+	mounted() {
+		this.$nextTick(() => {
+			this.$refs.TemplateAutocompleteComponent.$watch("templateSelected", (value) => {
+				this.selectedTemplate = value;
+			});
+		});
+	},
 	methods: {
-		cargar() {
+		cargar(textTemplate) {
 			const templateInput = this.$refs.TemplateInput.$refs.templateMessage;
-			templateInput.innerHTML = this.templateMessage.text.replace(/\{\{(\d+)\}\}/g, (match, p1) => {
+			templateInput.innerHTML = textTemplate.replace(/\{\{(\d+)\}\}/g, (match, p1) => {
 				const id = `input_${p1}`;
 				return `<input id="${id}" class="field-message font-weight-medium" />`;
 			});
 		},
 	},
-	mounted() {
-		this.cargar();
-	}
 };
 </script>

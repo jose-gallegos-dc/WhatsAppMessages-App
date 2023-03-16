@@ -5,6 +5,7 @@
 
 <script>
 export default {
+   name: "TemplateAutocompleteComponent",
    data: () => ({
       templateItems: [],
       templateSelected: "",
@@ -20,11 +21,11 @@ export default {
             title: "hola",
             value: "t2",
             text: "Hola {{1}}, este es el dos {{2}}."
-         }, // <- falta una coma aquí
+         },
          {
             title: "test",
             value: "t3",
-            text: "description 3",
+            text: "test {{1}}, este es el dos {{2}}.",
          },
       ]
    }),
@@ -45,7 +46,6 @@ export default {
             });
             this.templateLoading = false;
          }, 500);
-
 
       }
    },

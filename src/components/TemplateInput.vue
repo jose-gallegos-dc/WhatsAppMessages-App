@@ -1,14 +1,19 @@
 <template>
-   <div class="text-justify pa-5 bg-grey-lighten-4 rounded" id="templateMessage" ref="templateMessage"></div>
-   <v-btn @click="limpiar()">limpiar</v-btn>
+   <div class="pa-5 bg-grey-lighten-4 rounded" id="templateMessage" ref="templateMessage"></div>
 </template>
  
 <script>
 export default {
    name: "TemplateInputComponent",
+   data: () => ({
+      defaultText : `<div class="text-body-2 text-grey-darken-1 d-flex justify-center">No ha seleccionado una plantilla</div>`,
+   }),
+   mounted() {
+      this.$refs.templateMessage.innerHTML = this.defaultText;
+   },
    methods: {
-      limpiar() {
-         this.$refs.templateMessage.innerHTML = "";
+      reset() {
+         this.$refs.templateMessage.innerHTML = this.defaultText;
       }
    }
 }

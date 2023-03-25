@@ -4,7 +4,7 @@
 			<v-col cols="12" md="5">
 				<v-card elevation="0" class="pa-4 border rounded-lg">
 					<PhoneNumber ref="PhoneNumberComponent" />
-					<TemplateAutoComplete ref="TemplateAutocompleteComponent" />
+					<TemplateAutoComplete ref="TemplateAutocompleteComponent" @click:clear="clearTemplate" />
 				</v-card>
 			</v-col>
 			<v-col cols="12" md="7">
@@ -63,6 +63,10 @@ export default {
 				return `<input id="${id}" class="field-message font-weight-medium" />`;
 			});
 		},
+		clearTemplate() {
+			console.log("limpio");
+			this.$refs.TemplateInput.reset();
+		}
 	},
 };
 </script>

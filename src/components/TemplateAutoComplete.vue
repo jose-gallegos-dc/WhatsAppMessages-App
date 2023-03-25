@@ -1,6 +1,6 @@
 <template>
    <v-autocomplete label="Plantillas" :items="templateItems" v-model.lazy="templateSelected"
-      v-model:search="templateSearch" :loading="templateLoading" hide-no-data clearable></v-autocomplete>
+      v-model:search="templateSearch" :loading="templateLoading" hide-no-data clearable ></v-autocomplete>
 </template>
 
 <script>
@@ -47,7 +47,7 @@ export default {
             this.templateLoading = false;
          }, 500);
 
-      }
+      },
    },
 }
 </script>

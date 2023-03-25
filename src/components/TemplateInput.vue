@@ -1,10 +1,16 @@
 <template>
    <div class="text-justify pa-5 bg-grey-lighten-4 rounded" id="templateMessage" ref="templateMessage"></div>
+   <v-btn @click="limpiar()">limpiar</v-btn>
 </template>
  
 <script>
 export default {
    name: "TemplateInputComponent",
+   methods: {
+      limpiar() {
+         this.$refs.templateMessage.innerHTML = "";
+      }
+   }
 }
 </script>
 

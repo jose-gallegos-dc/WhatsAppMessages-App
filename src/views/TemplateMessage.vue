@@ -41,9 +41,11 @@ export default {
 	}),
 	watch: {
 		selectedTemplate(value) {
-			const selectedTemplate = this.$refs.TemplateAutocompleteComponent.templates.find(template => template.value === value);
-			console.log("Plantilla seleccionada: ", selectedTemplate.text);
-			this.cargar(selectedTemplate.text);
+			if (value != undefined) {
+				const selectedTemplate = this.$refs.TemplateAutocompleteComponent.templates.find(template => template.value === value);
+				console.log("Plantilla seleccionada: ", selectedTemplate.text);
+				this.showTemplate(selectedTemplate.text);
+			}
 		},
 	},
 	mounted() {
@@ -54,7 +56,7 @@ export default {
 		});
 	},
 	methods: {
-		cargar(textTemplate) {
+		showTemplate(textTemplate) {
 			const templateInput = this.$refs.TemplateInput.$refs.templateMessage;
 			templateInput.innerHTML = textTemplate.replace(/\{\{(\d+)\}\}/g, (match, p1) => {
 				const id = `input_${p1}`;

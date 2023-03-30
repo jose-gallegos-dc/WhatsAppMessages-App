@@ -15,6 +15,7 @@
 							<v-btn class="mt-3" type="submit" color="teal-darken-2" prepend-icon="mdi-send" :disabled="!valid">
 								Enviar
 							</v-btn>
+							<v-btn @click="checar()">checar</v-btn>
 						</div>
 					</v-form>
 				</v-card>
@@ -66,7 +67,11 @@ export default {
 		clearTemplate() {
 			console.log("limpio");
 			this.$refs.TemplateInput.reset();
+		},
+		checar() {
+			this.$refs.TemplateInput.checkInputs();
 		}
+
 	},
 };
 </script>

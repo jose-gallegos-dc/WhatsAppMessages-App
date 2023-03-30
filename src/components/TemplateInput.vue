@@ -6,7 +6,7 @@
 export default {
    name: "TemplateInputComponent",
    data: () => ({
-      defaultText : `<div class="text-body-2 text-grey-darken-1 d-flex justify-center">No ha seleccionado una plantilla</div>`,
+      defaultText: `<div class="text-body-2 text-grey-darken-1 d-flex justify-center">No ha seleccionado una plantilla</div>`,
    }),
    mounted() {
       this.$refs.templateMessage.innerHTML = this.defaultText;
@@ -14,8 +14,25 @@ export default {
    methods: {
       reset() {
          this.$refs.templateMessage.innerHTML = this.defaultText;
+      },
+      checkInputs() {
+         const inputs = this.$refs.templateMessage.querySelectorAll('input');
+         for (let i = 0; i < inputs.length; i++) {
+            if (inputs[i].value.trim() === '') {
+               console.log(false);
+               return false;
+            }
+         }
+         console.log(true);
+         return true;
       }
-   }
+   },
+   computed: {
+      areInputsEmpty() {
+         return !this.checkInputs();
+      }
+   },
+
 }
 </script>
 

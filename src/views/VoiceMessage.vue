@@ -35,11 +35,9 @@ export default {
 	data: () => ({
 		valid: false,
 		rules: [
-			value => !!value || 'El archivo es requerido',
-			value => (value && value[0].name.endsWith('.mp3') || value[0].name.endsWith('.wav')) || 'El archivo debe ser de tipo de audio'
+			value => value !== null && value.length > 0 || 'El archivo es requerido',
+			value => !value || (value[0] && (value[0].name.endsWith('.mp3') || value[0].name.endsWith('.wav'))) || 'El archivo debe ser de tipo de audio',
 		]
-
-
 	}),
 	methods: {
 		onSubmit() {
